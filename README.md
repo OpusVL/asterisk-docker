@@ -29,7 +29,7 @@ version: '3'
 
 services:
   asterisk:
-    image: registry.deploy.opusvl.net/opusvl/asterisk:latest
+    image: opusvl/asterisk:latest
     volumes:
       - "${PWD}/etc/asterisk/:/etc/asterisk:rw"
       - "${PWD}/log:/var/log/asterisk:rw"
