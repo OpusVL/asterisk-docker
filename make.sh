@@ -26,4 +26,3 @@ make menuselect
 make install
 make config
 make samples
-make progdocs

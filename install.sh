@@ -13,5 +13,7 @@ apt-get install -y \
   openssl \
   uuid-dev
 
+apt-get autoclean
+
 useradd asterisk
 echo "asterisk:Obelix" | chpasswd
