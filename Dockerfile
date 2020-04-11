@@ -25,7 +25,9 @@ COPY --from=builder --chown=asterisk:asterisk /var/lib/asterisk/ /var/lib/asteri
 
 COPY --from=builder /entrypoint.sh /entrypoint.sh
 
-EXPOSE 5060/udp 5060/tcp 8088/tcp 5038/tcp
+COPY ${PWD}/asterisk.conf /etc/supervisor/conf.d/asterisk.conf
+
+EXPOSE 5060/udp 5060/tcp 8088/tcp 5038/tcp 10000-11000/udp
 
 VOLUME /var/lib/asterisk/sounds /var/lib/asterisk/keys /var/lib/asterisk/phoneprov /var/spool/asterisk /var/log/asterisk /etc/asterisk
 

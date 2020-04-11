@@ -5,10 +5,10 @@ apt-get update
 apt-get install -y \
   build-essential \
   curl \
-  doxygen \
   git \
   libedit-dev \
   libjansson-dev \
+  libldap2-dev \
   libncurses5-dev \
   libsqlite3-dev \
   libssl-dev \

@@ -2,7 +2,8 @@
 
 
 if [ "$1" = "" ]; then
-  COMMAND="/usr/sbin/asterisk -T -W -U asterisk -p -vvvdddf"
+  # COMMAND="/usr/sbin/asterisk -T -W -U asterisk -p -vvvdddf"
+  COMMAND="/usr/bin/supervisord -n"
 else
   COMMAND="$@"
 fi

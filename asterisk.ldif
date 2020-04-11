@@ -1,0 +1,2361 @@
+#
+# Copyright (c) 2019 Xavier Brassoud - <https://www.xavierbrassoud.fr/>
+# Copyright (c) 2007-2009 Suretec Systems Ltd. - <http://www.suretecsystems.com/>
+#
+# Version: 4.0.0
+#
+# Changes:
+# - Added PJSIP Class - 30/05/2019
+#   * Aor as AsteriskPjsipAor
+#   * Auth as AsteriskPjsipAuth
+#   * DomainAlias as AsteriskPjsipDomainAlias
+#   * Endpoint as AsteriskPjsipEndpoint
+#   * Identify as AsteriskPjsipIdentify
+#   * Contact as AsteriskPjsipContact
+# - Fixed typo - 13/08/2009
+# - https://issues.asterisk.org/view.php?id=13725 - 12/08/2009
+# - Added AsteriskVoiceMail Object class and AstAccountCallLimit attribute - 28/05/2009
+#   https://issues.asterisk.org/view.php?id=15155
+# - Added AstAccountLastQualifyMilliseconds - 28/05/2009
+#   https://issues.asterisk.org/view.php?id=15156
+# - https://issues.asterisk.org/view.php?id=12860 - 04/07/2008
+# - Fixed wrong DESC - 07/05/2008
+#
+# Author: Gavin Henry - <ghenry@suretecsystems.com>
+#         Xavier Brassoud - <xavier.brassoud@gmail.com>
+#
+# Asterisk LDAP Schema ldif
+#
+# Digium root OID (http://www.iana.org/assignments/enterprise-numbers)
+#
+#  1.3.6.1.4.1.22736
+#  1.3.6.1.4.1.22736.5      LDAP elements
+#  1.3.6.1.4.1.22736.5.4    Attribute Types
+#  1.3.6.1.4.1.22736.5.5    Object Classes
+#
+dn: cn=asterisk,cn=schema,cn=config
+objectClass: olcSchemaConfig
+cn: asterisk
+#
+olcObjectIdentifier: AsteriskRoot 1.3.6.1.4.1.22736
+olcObjectIdentifier: AsteriskLDAP AsteriskRoot:5
+#
+#############################################################################
+# Attribute group OIDs.  e.g.: olcObjectIdentifier: AstAttrType AsteriskLDAP:4
+#############################################################################
+olcObjectIdentifier: AstAttrType AsteriskLDAP:4
+#
+#
+#############################################################################
+# Attribute OIDs e.g.: olcObjectIdentifier: AstContext AstAttrType:1
+#############################################################################
+olcObjectIdentifier: AstContext AstAttrType:1
+olcObjectIdentifier: AstExtension AstAttrType:2
+olcObjectIdentifier: AstPriority AstAttrType:3
+olcObjectIdentifier: AstApplication AstAttrType:4
+olcObjectIdentifier: AstApplicationData AstAttrType:5
+olcObjectIdentifier: AstAccountAMAFlags AstAttrType:6
+olcObjectIdentifier: AstAccountCallerID AstAttrType:7
+olcObjectIdentifier: AstAccountContext AstAttrType:8
+olcObjectIdentifier: AstAccountMailbox AstAttrType:9
+olcObjectIdentifier: AstMD5secret AstAttrType:10
+olcObjectIdentifier: AstAccountDeny AstAttrType:11
+olcObjectIdentifier: AstAccountPermit AstAttrType:12
+olcObjectIdentifier: AstAccountQualify AstAttrType:13
+olcObjectIdentifier: AstAccountType AstAttrType:14
+olcObjectIdentifier: AstAccountDisallowedCodec AstAttrType:15
+olcObjectIdentifier: AstAccountExpirationTimestamp AstAttrType:16
+olcObjectIdentifier: AstAccountRegistrationContext AstAttrType:17
+olcObjectIdentifier: AstAccountRegistrationExten AstAttrType:18
+olcObjectIdentifier: AstAccountNoTransfer AstAttrType:19
+olcObjectIdentifier: AstAccountCallGroup AstAttrType:20
+olcObjectIdentifier: AstAccountCanReinvite AstAttrType:21
+olcObjectIdentifier: AstAccountDTMFMode AstAttrType:22
+olcObjectIdentifier: AstAccountFromUser AstAttrType:23
+olcObjectIdentifier: AstAccountFromDomain AstAttrType:24
+olcObjectIdentifier: AstAccountFullContact AstAttrType:25
+olcObjectIdentifier: AstAccountHost AstAttrType:26
+olcObjectIdentifier: AstAccountInsecure AstAttrType:27
+olcObjectIdentifier: AstAccountNAT AstAttrType:28
+olcObjectIdentifier: AstAccountPickupGroup AstAttrType:29
+olcObjectIdentifier: AstAccountPort AstAttrType:30
+olcObjectIdentifier: AstAccountRestrictCID AstAttrType:31
+olcObjectIdentifier: AstAccountRTPTimeout AstAttrType:32
+olcObjectIdentifier: AstAccountRTPHoldTimeout AstAttrType:33
+olcObjectIdentifier: AstAccountRealmedPassword AstAttrType:34
+olcObjectIdentifier: AstAccountAllowedCodec AstAttrType:35
+olcObjectIdentifier: AstAccountMusicOnHold AstAttrType:36
+olcObjectIdentifier: AstAccountCanCallForward AstAttrType:37
+olcObjectIdentifier: AstAccountSecret AstAttrType:38
+olcObjectIdentifier: AstAccountName AstAttrType:39
+olcObjectIdentifier: AstConfigFilename AstAttrType:40
+olcObjectIdentifier: AstConfigCategory AstAttrType:41
+olcObjectIdentifier: AstConfigCategoryMetric AstAttrType:42
+olcObjectIdentifier: AstConfigVariableName AstAttrType:43
+olcObjectIdentifier: AstConfigVariableValue AstAttrType:44
+olcObjectIdentifier: AstConfigCommented AstAttrType:45
+olcObjectIdentifier: AstAccountIPAddress AstAttrType:46
+olcObjectIdentifier: AstAccountDefaultUser AstAttrType:47
+olcObjectIdentifier: AstAccountRegistrationServer AstAttrType:48
+olcObjectIdentifier: AstAccountLastQualifyMilliseconds AstAttrType:49
+olcObjectIdentifier: AstAccountCallLimit AstAttrType:50
+olcObjectIdentifier: AstVoicemailMailbox AstAttrType:51
+olcObjectIdentifier: AstVoicemailPassword AstAttrType:52
+olcObjectIdentifier: AstVoicemailFullname AstAttrType:53
+olcObjectIdentifier: AstVoicemailEmail AstAttrType:54
+olcObjectIdentifier: AstVoicemailPager AstAttrType:55
+olcObjectIdentifier: AstVoicemailOptions AstAttrType:56
+olcObjectIdentifier: AstVoicemailTimestamp AstAttrType:57
+olcObjectIdentifier: AstVoicemailContext AstAttrType:58
+olcObjectIdentifier: AstAccountSubscribeContext AstAttrType:59
+olcObjectIdentifier: AstAccountUserAgent AstAttrType:61
+olcObjectIdentifier: AstAccountLanguage AstAttrType:62
+olcObjectIdentifier: AstAccountTransport AstAttrType:63
+olcObjectIdentifier: AstAccountPromiscRedir AstAttrType:64
+olcObjectIdentifier: AstAccountAccountCode AstAttrType:65
+olcObjectIdentifier: AstAccountSetVar AstAttrType:66
+olcObjectIdentifier: AstAccountAllowOverlap AstAttrType:67
+olcObjectIdentifier: AstAccountVideoSupport AstAttrType:68
+olcObjectIdentifier: AstAccountIgnoreSDPVersion AstAttrType:69
+olcObjectIdentifier: AstAccountPathSupport AstAttrType:70
+olcObjectIdentifier: AstAorId AstAttrType:71
+olcObjectIdentifier: AstAorContact AstAttrType:72
+olcObjectIdentifier: AstAorDefaultExpiration AstAttrType:73
+olcObjectIdentifier: AstAorMailboxes AstAttrType:74
+olcObjectIdentifier: AstAorVoicemailExtension AstAttrType:75
+olcObjectIdentifier: AstAorMaximumExpiration AstAttrType:76
+olcObjectIdentifier: AstAorMaxContacts AstAttrType:77
+olcObjectIdentifier: AstAorMinimumExpiration AstAttrType:78
+olcObjectIdentifier: AstAorRemoveExisting AstAttrType:79
+olcObjectIdentifier: AstAorQualifyFrequency AstAttrType:80
+olcObjectIdentifier: AstAorQualifyTimeout AstAttrType:81
+olcObjectIdentifier: AstAorAuthenticateQualify AstAttrType:82
+olcObjectIdentifier: AstAorOutboundProxy AstAttrType:83
+olcObjectIdentifier: AstAorSupportPath AstAttrType:84
+olcObjectIdentifier: AstAuthId AstAttrType:85
+olcObjectIdentifier: AstAuthType AstAttrType:86
+olcObjectIdentifier: AstAuthNonceLifetime AstAttrType:87
+olcObjectIdentifier: AstAuthMd5Cred AstAttrType:88
+olcObjectIdentifier: AstAuthPassword AstAttrType:89
+olcObjectIdentifier: AstAuthRealm AstAttrType:90
+olcObjectIdentifier: AstAuthUsername AstAttrType:91
+olcObjectIdentifier: AstDomainAliasId AstAttrType:92
+olcObjectIdentifier: AstDomainAliasDomain AstAttrType:93
+olcObjectIdentifier: AstEndpointId AstAttrType:94
+olcObjectIdentifier: AstEndpoint100rel AstAttrType:95
+olcObjectIdentifier: AstEndpointAggregateMwi AstAttrType:96
+olcObjectIdentifier: AstEndpointAllow AstAttrType:97
+olcObjectIdentifier: AstEndpointAllowOverlap AstAttrType:98
+olcObjectIdentifier: AstEndpointAors AstAttrType:99
+olcObjectIdentifier: AstEndpointAuth AstAttrType:100
+olcObjectIdentifier: AstEndpointCallerId AstAttrType:101
+olcObjectIdentifier: AstEndpointCallerIdPrivacy AstAttrType:102
+olcObjectIdentifier: AstEndpointCallerIdTag AstAttrType:103
+olcObjectIdentifier: AstEndpointContext AstAttrType:104
+olcObjectIdentifier: AstEndpointDirectMediaGlareMitigation AstAttrType:105
+olcObjectIdentifier: AstEndpointDirectMediaMethod AstAttrType:106
+olcObjectIdentifier: AstEndpointTrustConnectedLine AstAttrType:107
+olcObjectIdentifier: AstEndpointSendConnectedLine AstAttrType:108
+olcObjectIdentifier: AstEndpointConnectedLineMethod AstAttrType:109
+olcObjectIdentifier: AstEndpointDirectMedia AstAttrType:110
+olcObjectIdentifier: AstEndpointDisableDirectMediaOnNat AstAttrType:111
+olcObjectIdentifier: AstEndpointDisallow AstAttrType:112
+olcObjectIdentifier: AstEndpointDtmfMode AstAttrType:113
+olcObjectIdentifier: AstEndpointMediaAddress AstAttrType:114
+olcObjectIdentifier: AstEndpointBindRtpToMediaAddress AstAttrType:115
+olcObjectIdentifier: AstEndpointForceRport AstAttrType:116
+olcObjectIdentifier: AstEndpointIceSupport AstAttrType:117
+olcObjectIdentifier: AstEndpointIdentifyBy AstAttrType:118
+olcObjectIdentifier: AstEndpointRedirectMethod AstAttrType:119
+olcObjectIdentifier: AstEndpointMailboxes AstAttrType:120
+olcObjectIdentifier: AstEndpointMwiSubscribeReplacesUnsolicited AstAttrType:121
+olcObjectIdentifier: AstEndpointVoicemailExtension AstAttrType:122
+olcObjectIdentifier: AstEndpointMohSuggest AstAttrType:123
+olcObjectIdentifier: AstEndpointOutboundAuth AstAttrType:124
+olcObjectIdentifier: AstEndpointOutboundProxy AstAttrType:125
+olcObjectIdentifier: AstEndpointRewriteContact AstAttrType:126
+olcObjectIdentifier: AstEndpointRtpIpv6 AstAttrType:127
+olcObjectIdentifier: AstEndpointRtpSymmetric AstAttrType:128
+olcObjectIdentifier: AstEndpointSendDiversion AstAttrType:129
+olcObjectIdentifier: AstEndpointSendPai AstAttrType:130
+olcObjectIdentifier: AstEndpointSendRpid AstAttrType:131
+olcObjectIdentifier: AstEndpointRpidImmediate AstAttrType:132
+olcObjectIdentifier: AstEndpointTimersMinSe AstAttrType:133
+olcObjectIdentifier: AstEndpointTimers AstAttrType:134
+olcObjectIdentifier: AstEndpointTimersSessExpires AstAttrType:135
+olcObjectIdentifier: AstEndpointTransport AstAttrType:136
+olcObjectIdentifier: AstEndpointTrustIdInbound AstAttrType:137
+olcObjectIdentifier: AstEndpointTrustIdOutbound AstAttrType:138
+olcObjectIdentifier: AstEndpointUsePtime AstAttrType:139
+olcObjectIdentifier: AstEndpointUseAvpf AstAttrType:140
+olcObjectIdentifier: AstEndpointForceAvp AstAttrType:141
+olcObjectIdentifier: AstEndpointMediaUseReceivedTransport AstAttrType:142
+olcObjectIdentifier: AstEndpointMediaEncryption AstAttrType:143
+olcObjectIdentifier: AstEndpointMediaEncryptionOptimistic AstAttrType:144
+olcObjectIdentifier: AstEndpointg726NonStandard AstAttrType:145
+olcObjectIdentifier: AstEndpointInbandProgress AstAttrType:146
+olcObjectIdentifier: AstEndpointCallGroup AstAttrType:147
+olcObjectIdentifier: AstEndpointPickupGroup AstAttrType:148
+olcObjectIdentifier: AstEndpointNamedCallGroup AstAttrType:149
+olcObjectIdentifier: AstEndpointNamedPickupGroup AstAttrType:150
+olcObjectIdentifier: AstEndpointDeviceStateBusyAt AstAttrType:151
+olcObjectIdentifier: AstEndpointt38Udptl AstAttrType:152
+olcObjectIdentifier: AstEndpointt38UdptlEc AstAttrType:153
+olcObjectIdentifier: AstEndpointt38UdptlMaxdatagram AstAttrType:154
+olcObjectIdentifier: AstEndpointFaxDetect AstAttrType:155
+olcObjectIdentifier: AstEndpointFaxDetectTimeout AstAttrType:156
+olcObjectIdentifier: AstEndpointt38UdptlNat AstAttrType:157
+olcObjectIdentifier: AstEndpointt38UdptlIpv6 AstAttrType:158
+olcObjectIdentifier: AstEndpointToneZone AstAttrType:159
+olcObjectIdentifier: AstEndpointLanguage AstAttrType:160
+olcObjectIdentifier: AstEndpointOneTouchRecording AstAttrType:161
+olcObjectIdentifier: AstEndpointRecordOnFeature AstAttrType:162
+olcObjectIdentifier: AstEndpointRecordOffFeature AstAttrType:163
+olcObjectIdentifier: AstEndpointRtpEngine AstAttrType:164
+olcObjectIdentifier: AstEndpointAllowTransfer AstAttrType:165
+olcObjectIdentifier: AstEndpointUserEqPhone AstAttrType:166
+olcObjectIdentifier: AstEndpointSdpOwner AstAttrType:167
+olcObjectIdentifier: AstEndpointSdpSession AstAttrType:168
+olcObjectIdentifier: AstEndpointTosAudio AstAttrType:169
+olcObjectIdentifier: AstEndpointTosVideo AstAttrType:170
+olcObjectIdentifier: AstEndpointCosAudio AstAttrType:171
+olcObjectIdentifier: AstEndpointCosVideo AstAttrType:172
+olcObjectIdentifier: AstEndpointAllowSubscribe AstAttrType:173
+olcObjectIdentifier: AstEndpointSubMinExpiry AstAttrType:174
+olcObjectIdentifier: AstEndpointFromUser AstAttrType:175
+olcObjectIdentifier: AstEndpointMwiFromUser AstAttrType:176
+olcObjectIdentifier: AstEndpointFromDomain AstAttrType:177
+olcObjectIdentifier: AstEndpointDtlsVerify AstAttrType:178
+olcObjectIdentifier: AstEndpointDtlsRekey AstAttrType:179
+olcObjectIdentifier: AstEndpointDtlsCertFile AstAttrType:180
+olcObjectIdentifier: AstEndpointDtlsPrivateKey AstAttrType:181
+olcObjectIdentifier: AstEndpointDtlsCipher AstAttrType:182
+olcObjectIdentifier: AstEndpointDtlsCaFile AstAttrType:183
+olcObjectIdentifier: AstEndpointDtlsCaPath AstAttrType:184
+olcObjectIdentifier: AstEndpointDtlsSetup AstAttrType:185
+olcObjectIdentifier: AstEndpointDtlsFingerprint AstAttrType:186
+olcObjectIdentifier: AstEndpointSrtpTag32 AstAttrType:187
+olcObjectIdentifier: AstEndpointSetVar AstAttrType:188
+olcObjectIdentifier: AstEndpointMessageContext AstAttrType:189
+olcObjectIdentifier: AstEndpointAccountCode AstAttrType:190
+olcObjectIdentifier: AstEndpointRtpKeepalive AstAttrType:191
+olcObjectIdentifier: AstEndpointRtpTimeout AstAttrType:192
+olcObjectIdentifier: AstEndpointRtpTimeoutHold AstAttrType:193
+olcObjectIdentifier: AstEndpointAcl AstAttrType:194
+olcObjectIdentifier: AstEndpointDeny AstAttrType:195
+olcObjectIdentifier: AstEndpointPermit AstAttrType:196
+olcObjectIdentifier: AstEndpointContactAcl AstAttrType:197
+olcObjectIdentifier: AstEndpointContactDeny AstAttrType:198
+olcObjectIdentifier: AstEndpointContactPermit AstAttrType:199
+olcObjectIdentifier: AstEndpointSubscribeContext AstAttrType:200
+olcObjectIdentifier: AstEndpointContactUser AstAttrType:201
+olcObjectIdentifier: AstEndpointAsymmetricRtpCodec AstAttrType:202
+olcObjectIdentifier: AstEndpointRtcpMux AstAttrType:203
+olcObjectIdentifier: AstEndpointReferBlindProgress AstAttrType:204
+olcObjectIdentifier: AstEndpointNotifyEarlyInuseRinging AstAttrType:205
+olcObjectIdentifier: AstEndpointIncomingMwiMailbox AstAttrType:206
+olcObjectIdentifier: AstEndpointFollowEarlyMediaFork AstAttrType:207
+olcObjectIdentifier: AstEndpointAcceptMultipleSdpAnswers AstAttrType:208
+olcObjectIdentifier: AstEndpointSuppressQ850ReasonHeaders AstAttrType:209
+olcObjectIdentifier: AstEndpointIgnore183WithoutSdp AstAttrType:210
+olcObjectIdentifier: AstIdentifyId AstAttrType:211
+olcObjectIdentifier: AstIdentifyEndpoint AstAttrType:212
+olcObjectIdentifier: AstIdentifyMatch AstAttrType:213
+olcObjectIdentifier: AstIdentifySrvLookups AstAttrType:214
+olcObjectIdentifier: AstIdentifyMatchHeader AstAttrType:215
+olcObjectIdentifier: AstContactId AstAttrType:216
+olcObjectIdentifier: AstContactUri AstAttrType:217
+olcObjectIdentifier: AstContactExpirationTime AstAttrType:218
+olcObjectIdentifier: AstContactQualifyFrequency AstAttrType:219
+olcObjectIdentifier: AstContactQualifyTimeout AstAttrType:220
+olcObjectIdentifier: AstContactAuthenticateQualify AstAttrType:221
+olcObjectIdentifier: AstContactOutboundProxy AstAttrType:222
+olcObjectIdentifier: AstContactPath AstAttrType:223
+olcObjectIdentifier: AstContactUserAgent AstAttrType:224
+olcObjectIdentifier: AstContactEndpoint AstAttrType:225
+olcObjectIdentifier: AstContactRegServer AstAttrType:226
+olcObjectIdentifier: AstContactViaAddr AstAttrType:227
+olcObjectIdentifier: AstContactViaPort AstAttrType:228
+olcObjectIdentifier: AstContactCallId AstAttrType:229
+olcObjectIdentifier: AstContactPruneOnBoot AstAttrType:230
+#
+#
+#############################################################################
+# Object Class OIDs
+#############################################################################
+olcObjectIdentifier: AstObjectClass AsteriskLDAP:2
+olcObjectIdentifier: AsteriskExtension AstObjectClass:1
+olcObjectIdentifier: AsteriskIAXUser AstObjectClass:2
+olcObjectIdentifier: AsteriskSIPUser AstObjectClass:3
+olcObjectIdentifier: AsteriskConfig AstObjectClass:4
+olcObjectIdentifier: AsteriskVoiceMail AstObjectClass:5
+olcObjectIdentifier: AsteriskDialplan AstObjectClass:6
+olcObjectIdentifier: AsteriskAccount AstObjectClass:7
+olcObjectIdentifier: AsteriskMailbox AstObjectClass:8
+olcObjectIdentifier: AsteriskPjsipAor AstObjectClass:9
+olcObjectIdentifier: AsteriskPjsipAuth AstObjectClass:10
+olcObjectIdentifier: AsteriskPjsipDomainAlias AstObjectClass:11
+olcObjectIdentifier: AsteriskPjsipEndpoint AstObjectClass:12
+olcObjectIdentifier: AsteriskPjsipIdentify AstObjectClass:13
+olcObjectIdentifier: AsteriskPjsipContact AstObjectClass:14
+#
+#
+#############################################################################
+# attribute definitions
+#
+# OID (the first arg) comes from the olcObjectIdentifier: defined above
+#
+# NAME should be the same as olcObjectIdentifier:
+#
+# DESC should be the description of the attribute
+#
+# EQUALITY is the rule to use when doing a search/compare for an
+# attribute value.
+#
+# SUBSTR is the rule to use when doing a substring search (*foo*)
+#
+# SYNTAX is the syntax (i.e., type) of the attribute. We should
+# probably stick to syntaxes:
+#
+#       1.3.6.1.4.1.1466.115.121.1.15   -> directoryString (UTF-8 string)
+#       1.3.6.1.4.1.1466.115.121.1.26   -> IA5String (ASCII String)
+#       1.3.6.1.4.1.1466.115.121.1.27   -> integer (Integer value)
+#
+# SINGLE-VALUE should be present if only one instance of this
+# attribute is allowed within an entry.
+#
+# {32} is the allowed length
+#
+# e.g.:
+# 
+# olcAttributeTypes: ( AstExample
+#    NAME ( 'AstExample' )
+#    DESC 'Asterisk Example Attribute'
+#    EQUALITY caseIgnoreMatch
+#    SUBSTR caseIgnoreSubstringsMatch
+#    SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{32} 
+#    SINGLE-VALUE )
+#
+#############################################################################
+#
+olcAttributeTypes: ( AstContext
+        NAME 'AstContext'
+        DESC 'Asterisk Context'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstExtension
+        NAME 'AstExtension'
+        DESC 'Asterisk Extension'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#       
+olcAttributeTypes: ( AstPriority
+        NAME 'AstPriority'
+        DESC 'Asterisk Priority'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstApplication 
+        NAME 'AstApplication'
+        DESC 'Asterisk Application'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstApplicationData 
+        NAME 'AstApplicationData'
+        DESC 'Asterisk Application Data'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#        
+olcAttributeTypes: ( AstAccountAMAFlags 
+        NAME 'AstAccountAMAFlags'
+        DESC 'Asterisk Account AMA Flags'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstAccountCallerID 
+        NAME 'AstAccountCallerID'
+        DESC 'Asterisk Account CallerID'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstAccountContext 
+        NAME 'AstAccountContext'
+        DESC 'Asterisk Account Context'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#        
+olcAttributeTypes: ( AstAccountMailbox 
+        NAME 'AstAccountMailbox'
+        DESC 'Asterisk Account Mailbox'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstMD5secret
+        NAME 'AstMD5secret'
+        DESC 'Asterisk Account MD5 Secret'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstAccountDeny 
+        NAME 'AstAccountDeny'
+        DESC 'Asterisk Account Deny'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstAccountPermit 
+        NAME 'AstAccountPermit'
+        DESC 'Asterisk Account Permit'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#       
+olcAttributeTypes: ( AstAccountQualify 
+        NAME 'AstAccountQualify'
+        DESC 'Asterisk Account Qualify'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstAccountType 
+        NAME 'AstAccountType'
+        DESC 'Asterisk Account Type'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstAccountDisallowedCodec 
+        NAME 'AstAccountDisallowedCodec'
+        DESC 'Asterisk Account Disallowed Codec'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstAccountExpirationTimestamp 
+        NAME 'AstAccountExpirationTimestamp'
+        DESC 'Asterisk Account Expiration Timestamp'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstAccountRegistrationContext 
+        NAME 'AstAccountRegistrationContext'
+        DESC 'Asterisk Account Registration Context'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstAccountRegistrationExten 
+        NAME 'AstAccountRegistrationExten'
+        DESC 'Asterisk Account Registration Extension'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstAccountNoTransfer 
+        NAME 'AstAccountNoTransfer'
+        DESC 'Asterisk Account No Transfer'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#        
+olcAttributeTypes: ( AstAccountCallGroup 
+        NAME 'AstAccountCallGroup'
+        DESC 'Asterisk Account Call Group'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstAccountCanReinvite 
+        NAME 'AstAccountCanReinvite'
+        DESC 'Asterisk Account Can Reinvite'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#    
+olcAttributeTypes: ( AstAccountDTMFMode 
+        NAME 'AstAccountDTMFMode'
+        DESC 'Asterisk Account DTMF Flags'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#            
+olcAttributeTypes: ( AstAccountFromUser 
+        NAME 'AstAccountFromUser'
+        DESC 'Asterisk Account From User'
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#        
+olcAttributeTypes: ( AstAccountFromDomain
+        NAME 'AstAccountFromDomain'
+        DESC 'Asterisk Account From Domain'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#        
+olcAttributeTypes: ( AstAccountFullContact 
+        NAME 'AstAccountFullContact'
+        DESC 'Asterisk Account Full Contact'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstAccountHost 
+        NAME 'AstAccountHost'
+        DESC 'Asterisk Account Host'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstAccountInsecure
+        NAME 'AstAccountInsecure'
+        DESC 'Asterisk Account Insecure'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstAccountNAT 
+        NAME 'AstAccountNAT'
+        DESC 'Asterisk Account NAT'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#     
+olcAttributeTypes: ( AstAccountPickupGroup 
+        NAME 'AstAccountPickupGroup'
+        DESC 'Asterisk Account PickupGroup'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#      
+olcAttributeTypes: ( AstAccountPort 
+        NAME 'AstAccountPort'
+        DESC 'Asterisk Account Port'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#      
+olcAttributeTypes: ( AstAccountRestrictCID 
+        NAME 'AstAccountRestrictCID'
+        DESC 'Asterisk Account Restrict CallerID'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#            
+olcAttributeTypes: ( AstAccountRTPTimeout 
+        NAME 'AstAccountRTPTimeout'
+        DESC 'Asterisk Account RTP Timeout'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#      
+olcAttributeTypes: ( AstAccountRTPHoldTimeout 
+        NAME 'AstAccountRTPHoldTimeout'
+        DESC 'Asterisk Account RTP Hold Timeout'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#      
+olcAttributeTypes: ( AstAccountRealmedPassword 
+        NAME 'AstAccountRealmedPassword'
+        DESC 'Asterisk Account Realmed Password'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstAccountAllowedCodec 
+        NAME 'AstAccountAllowedCodec' 
+        DESC 'Asterisk Account Allowed Codec'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstAccountMusicOnHold 
+        NAME 'AstAccountMusicOnHold'
+        DESC 'Asterisk Account Music On Hold'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstAccountCanCallForward 
+        NAME 'AstAccountCanCallForward'
+        DESC 'Asterisk Account Can Call Forward' 
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstAccountSecret 
+        NAME 'AstAccountSecret'
+        DESC 'Asterisk Account Secret' 
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#         
+olcAttributeTypes: ( AstAccountName 
+        NAME 'AstAccountName'
+        DESC 'Asterisk Account Username'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstConfigFilename 
+        NAME 'AstConfigFilename'
+        DESC 'Asterisk LDAP Configuration Filename'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstConfigCategory
+        NAME 'AstConfigCategory'
+        DESC 'Asterisk LDAP Configuration Category'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstConfigCategoryMetric
+        NAME 'AstConfigCategoryMetric'
+        DESC 'Asterisk LDAP Configuration Category Metric'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstConfigVariableName
+        NAME 'AstConfigVariableName'
+        DESC 'Asterisk LDAP Configuration Variable Name'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstConfigVariableValue
+        NAME 'AstConfigVariableValue'
+        DESC 'Asterisk LDAP Configuration Variable Value'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstConfigCommented
+        NAME 'AstConfigCommented'
+        DESC 'Asterisk LDAP Configuration Commented'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstAccountIPAddress
+        NAME 'AstAccountIPAddress'
+        DESC 'Asterisk Account IP Address' 
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#  
+olcAttributeTypes: ( AstAccountDefaultUser
+        NAME 'AstAccountDefaultUser'
+        DESC 'Asterisk Account Default User'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstAccountRegistrationServer
+        NAME 'AstAccountRegistrationServer'
+        DESC 'Asterisk Account Registration Server' 
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstAccountLastQualifyMilliseconds
+        NAME 'AstAccountLastQualifyMilliseconds'
+        DESC 'Asterisk Account Last Qualify Milliseconds'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstAccountCallLimit
+        NAME 'AstAccountCallLimit'
+        DESC 'Asterisk Account Call Limit'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstVoicemailMailbox
+        NAME 'AstVoicemailMailbox'
+        DESC 'Asterisk voicemail mailbox'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstVoicemailPassword
+        NAME 'AstVoicemailPassword'
+        DESC 'Asterisk voicemail password'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstVoicemailFullname
+        NAME 'AstVoicemailFullname'
+        DESC 'Asterisk voicemail fullname'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstVoicemailEmail
+        NAME 'AstVoicemailEmail'
+        DESC 'Asterisk voicemail email'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstVoicemailPager
+        NAME 'AstVoicemailPager'
+        DESC 'Asterisk voicemail pager'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstVoicemailOptions
+        NAME 'AstVoicemailOptions'
+        DESC 'Asterisk voicemail options'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstVoicemailTimestamp
+        NAME 'AstVoicemailTimestamp'
+        DESC 'Asterisk voicemail timestamp'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstVoicemailContext
+        NAME 'AstVoicemailContext'
+        DESC 'Asterisk voicemail context'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstAccountSubscribeContext
+        NAME 'AstAccountSubscribeContext'
+        DESC 'Asterisk subscribe context'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstAccountUserAgent
+        NAME 'AstAccountUserAgent'
+        DESC 'Asterisk account user context'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstAccountLanguage
+         NAME 'AstAccountLanguage'
+         DESC 'Asterisk account user language'
+         EQUALITY caseIgnoreMatch
+         SUBSTR caseIgnoreSubstringsMatch
+         SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstAccountTransport
+        NAME 'AstAccountTransport'
+        DESC 'Asterisk account transport type'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstAccountPromiscRedir
+        NAME 'AstAccountPromiscRedir'
+        DESC 'Asterisk account promiscous redirects'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstAccountAccountCode
+        NAME 'AstAccountAccountCode'
+        DESC 'Asterisk account billing code'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstAccountSetVar
+        NAME 'AstAccountSetVar'
+        DESC 'Asterisk account setvar'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstAccountAllowOverlap
+        NAME 'AstAccountAllowOverlap'
+        DESC 'Asterisk account allow overlap dialing'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstAccountVideoSupport
+        NAME 'AstAccountVideoSupport'
+        DESC 'Asterisk account video support'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstAccountIgnoreSDPVersion
+        NAME 'AstAccountIgnoreSDPVersion'
+        DESC 'Asterisk account ignore SDP version'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstAccountPathSupport
+        NAME 'AstAccountPathSupport'
+        DESC 'Asterisk account support Path RFC 3327'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstAorId
+        NAME 'AstAorId'
+        DESC 'Aor ID'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstAorContact
+        NAME 'AstAorContact'
+        DESC 'Permanent contacts assigned to AoR'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstAorDefaultExpiration
+        NAME 'AstAorDefaultExpiration'
+        DESC 'Default expiration time in seconds for contacts that are dynamically bound to an AoR'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstAorMailboxes
+        NAME 'AstAorMailboxes'
+        DESC 'Allow subscriptions for the specified mailbox(es)'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstAorVoicemailExtension
+        NAME 'AstAorVoicemailExtension'
+        DESC 'The voicemail extension to send in the NOTIFY Message-Account header'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstAorMaximumExpiration
+        NAME 'AstAorMaximumExpiration'
+        DESC 'Maximum time to keep an AoR'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstAorMaxContacts
+        NAME 'AstAorMaxContacts'
+        DESC 'Maximum number of contacts that can bind to an AoR'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstAorMinimumExpiration
+        NAME 'AstAorMinimumExpiration'
+        DESC 'Minimum keep alive time for an AoR'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstAorRemoveExisting
+        NAME 'AstAorRemoveExisting'
+        DESC 'Determines whether new contacts replace existing ones'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstAorQualifyFrequency
+        NAME 'AstAorQualifyFrequency'
+        DESC 'Interval at which to qualify an AoR'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstAorQualifyTimeout
+        NAME 'AstAorQualifyTimeout'
+        DESC 'Timeout for qualify'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstAorAuthenticateQualify
+        NAME 'AstAorAuthenticateQualify'
+        DESC 'Authenticates a qualify challenge response if needed'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstAorOutboundProxy
+        NAME 'AstAorOutboundProxy'
+        DESC 'Outbound proxy used when sending OPTIONS request'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstAorSupportPath
+        NAME 'AstAorSupportPath'
+        DESC 'Enables Path support for REGISTER requests and Route support for other requests'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstAuthId
+        NAME 'AstAuthId'
+        DESC 'Auth ID'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstAuthType
+        NAME 'AstAuthType'
+        DESC 'Authentication type'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstAuthNonceLifetime
+        NAME 'AstAuthNonceLifetime'
+        DESC 'Lifetime of a nonce associated with this authentication config'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstAuthMd5Cred
+        NAME 'AstAuthMd5Cred'
+        DESC 'MD5 Hash used for authentication'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstAuthPassword
+        NAME 'AstAuthPassword'
+        DESC 'Plain text password used for authentication'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstAuthRealm
+        NAME 'AstAuthRealm'
+        DESC 'SIP realm for endpoint'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstAuthUsername
+        NAME 'AstAuthUsername'
+        DESC 'Username to use for account'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstDomainAliasId
+        NAME 'AstDomainAliasId'
+        DESC 'DomainAlias ID'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstDomainAliasDomain
+        NAME 'AstDomainAliasDomain'
+        DESC 'Domain to be aliased'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointId
+        NAME 'AstEndpointId'
+        DESC 'Endpoint ID'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpoint100rel
+        NAME 'AstEndpoint100rel'
+        DESC 'Allow support for RFC3262 provisional ACK tags'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointAggregateMwi
+        NAME 'AstEndpointAggregateMwi'
+        DESC 'Condense MWI notifications into a single NOTIFY'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointAllow
+        NAME 'AstEndpointAllow'
+        DESC 'Media Codec(s) to allow'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointAllowOverlap
+        NAME 'AstEndpointAllowOverlap'
+        DESC 'Enable RFC3578 overlap dialing support'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointAors
+        NAME 'AstEndpointAors'
+        DESC 'AoR(s) to be used with the endpoint'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointAuth
+        NAME 'AstEndpointAuth'
+        DESC 'Authentication Object(s) associated with the endpoint'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointCallerId
+        NAME 'AstEndpointCallerId'
+        DESC 'CallerID information for the endpoint'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointCallerIdPrivacy
+        NAME 'AstEndpointCallerIdPrivacy'
+        DESC 'Default privacy level'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointCallerIdTag
+        NAME 'AstEndpointCallerIdTag'
+        DESC 'Internal id_tag for the endpoint'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointContext
+        NAME 'AstEndpointContext'
+        DESC 'Dialplan context for inbound sessions'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointDirectMediaGlareMitigation
+        NAME 'AstEndpointDirectMediaGlareMitigation'
+        DESC 'Mitigation of direct media (re)INVITE glare'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointDirectMediaMethod
+        NAME 'AstEndpointDirectMediaMethod'
+        DESC 'Direct Media method type'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointTrustConnectedLine
+        NAME 'AstEndpointTrustConnectedLine'
+        DESC 'Accept Connected Line updates from this endpoint'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointSendConnectedLine
+        NAME 'AstEndpointSendConnectedLine'
+        DESC 'Send Connected Line updates to this endpoint'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointConnectedLineMethod
+        NAME 'AstEndpointConnectedLineMethod'
+        DESC 'Connected line method type'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointDirectMedia
+        NAME 'AstEndpointDirectMedia'
+        DESC 'Determines whether media may flow directly between endpoints'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointDisableDirectMediaOnNat
+        NAME 'AstEndpointDisableDirectMediaOnNat'
+        DESC 'Disable direct media session refreshes when NAT obstructs the media session'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointDisallow
+        NAME 'AstEndpointDisallow'
+        DESC 'Media Codec(s) to disallow'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointDtmfMode
+        NAME 'AstEndpointDtmfMode'
+        DESC 'DTMF mode'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointMediaAddress
+        NAME 'AstEndpointMediaAddress'
+        DESC 'IP address used in SDP for media handling'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointBindRtpToMediaAddress
+        NAME 'AstEndpointBindRtpToMediaAddress'
+        DESC 'Bind the RTP instance to the media_address'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointForceRport
+        NAME 'AstEndpointForceRport'
+        DESC 'Force use of return port'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointIceSupport
+        NAME 'AstEndpointIceSupport'
+        DESC 'Enable the ICE mechanism to help traverse NAT'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointIdentifyBy
+        NAME 'AstEndpointIdentifyBy'
+        DESC 'Way(s) for the endpoint to be identified'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointRedirectMethod
+        NAME 'AstEndpointRedirectMethod'
+        DESC 'How redirects received from an endpoint are handled'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointMailboxes
+        NAME 'AstEndpointMailboxes'
+        DESC 'NOTIFY the endpoint when state changes for any of the specified mailboxes'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointMwiSubscribeReplacesUnsolicited
+        NAME 'AstEndpointMwiSubscribeReplacesUnsolicited'
+        DESC 'An MWI subscribe will replace sending unsolicited NOTIFYs'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointVoicemailExtension
+        NAME 'AstEndpointVoicemailExtension'
+        DESC 'The voicemail extension to send in the NOTIFY Message-Account header'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointMohSuggest
+        NAME 'AstEndpointMohSuggest'
+        DESC 'Default Music On Hold class'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointOutboundAuth
+        NAME 'AstEndpointOutboundAuth'
+        DESC 'Authentication object(s) used for outbound requests'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointOutboundProxy
+        NAME 'AstEndpointOutboundProxy'
+        DESC 'Full SIP URI of the outbound proxy used to send requests'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointRewriteContact
+        NAME 'AstEndpointRewriteContact'
+        DESC 'Allow Contact header to be rewritten with the source IP address-port'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointRtpIpv6
+        NAME 'AstEndpointRtpIpv6'
+        DESC 'Allow use of IPv6 for RTP traffic'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointRtpSymmetric
+        NAME 'AstEndpointRtpSymmetric'
+        DESC 'Enforce that RTP must be symmetric'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointSendDiversion
+        NAME 'AstEndpointSendDiversion'
+        DESC 'Send the Diversion header, conveying the diversion information to the called user agent'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointSendPai
+        NAME 'AstEndpointSendPai'
+        DESC 'Send the P-Asserted-Identity header'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointSendRpid
+        NAME 'AstEndpointSendRpid'
+        DESC 'Send the Remote-Party-ID header'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointRpidImmediate
+        NAME 'AstEndpointRpidImmediate'
+        DESC 'Immediately send connected line updates on unanswered incoming calls'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointTimersMinSe
+        NAME 'AstEndpointTimersMinSe'
+        DESC 'Minimum session timers expiration period'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointTimers
+        NAME 'AstEndpointTimers'
+        DESC 'Session timers for SIP packets'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointTimersSessExpires
+        NAME 'AstEndpointTimersSessExpires'
+        DESC 'Maximum session timer expiration period'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointTransport
+        NAME 'AstEndpointTransport'
+        DESC 'Explicit transport configuration to use'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointTrustIdInbound
+        NAME 'AstEndpointTrustIdInbound'
+        DESC 'Accept identification information received from this endpoint'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointTrustIdOutbound
+        NAME 'AstEndpointTrustIdOutbound'
+        DESC 'Send private identification details to the endpoint'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointUsePtime
+        NAME 'AstEndpointUsePtime'
+        DESC 'Use Endpoint requested packetization interval'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointUseAvpf
+        NAME 'AstEndpointUseAvpf'
+        DESC 'Determines whether res_pjsip will use and enforce usage of AVPF for this endpoint'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointForceAvp
+        NAME 'AstEndpointForceAvp'
+        DESC 'Determines whether res_pjsip will use and enforce usage of AVP, regardless of the RTP profile in use for this endpoint'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointMediaUseReceivedTransport
+        NAME 'AstEndpointMediaUseReceivedTransport'
+        DESC 'Determines whether res_pjsip will use the media transport received in the offer SDP in the corresponding answer SDP'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointMediaEncryption
+        NAME 'AstEndpointMediaEncryption'
+        DESC 'Determines whether res_pjsip will use and enforce usage of media encryption for this endpoint'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointMediaEncryptionOptimistic
+        NAME 'AstEndpointMediaEncryptionOptimistic'
+        DESC 'Determines whether encryption should be used if possible but does not terminate the session if not achieved'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointg726NonStandard
+        NAME 'AstEndpointg726NonStandard'
+        DESC 'Force g.726 to use AAL2 packing order when negotiating g.726 audio'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointInbandProgress
+        NAME 'AstEndpointInbandProgress'
+        DESC 'Determines whether chan_pjsip will indicate ringing using inband progress'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointCallGroup
+        NAME 'AstEndpointCallGroup'
+        DESC 'The numeric pickup groups for a channel'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointPickupGroup
+        NAME 'AstEndpointPickupGroup'
+        DESC 'The numeric pickup groups that a channel can pickup'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointNamedCallGroup
+        NAME 'AstEndpointNamedCallGroup'
+        DESC 'The named pickup groups for a channel'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointNamedPickupGroup
+        NAME 'AstEndpointNamedPickupGroup'
+        DESC 'The named pickup groups that a channel can pickup'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointDeviceStateBusyAt
+        NAME 'AstEndpointDeviceStateBusyAt'
+        DESC 'The number of in-use channels which will cause busy to be returned as device state'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointt38Udptl
+        NAME 'AstEndpointt38Udptl'
+        DESC 'Whether T.38 UDPTL support is enabled or not'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointt38UdptlEc
+        NAME 'AstEndpointt38UdptlEc'
+        DESC 'T.38 UDPTL error correction method'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointt38UdptlMaxdatagram
+        NAME 'AstEndpointt38UdptlMaxdatagram'
+        DESC 'T.38 UDPTL maximum datagram size'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointFaxDetect
+        NAME 'AstEndpointFaxDetect'
+        DESC 'Whether CNG tone detection is enabled'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointFaxDetectTimeout
+        NAME 'AstEndpointFaxDetectTimeout'
+        DESC 'How long into a call before fax_detect is disabled for the call'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointt38UdptlNat
+        NAME 'AstEndpointt38UdptlNat'
+        DESC 'Whether NAT support is enabled on UDPTL sessions'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointt38UdptlIpv6
+        NAME 'AstEndpointt38UdptlIpv6'
+        DESC 'Whether IPv6 is used for UDPTL Sessions'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointToneZone
+        NAME 'AstEndpointToneZone'
+        DESC 'Set which country s indications to use for channels created for this endpoint'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointLanguage
+        NAME 'AstEndpointLanguage'
+        DESC 'Set the default language to use for channels created for this endpoint'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointOneTouchRecording
+        NAME 'AstEndpointOneTouchRecording'
+        DESC 'Determines whether one-touch recording is allowed for this endpoint'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointRecordOnFeature
+        NAME 'AstEndpointRecordOnFeature'
+        DESC 'The feature to enact when one-touch recording is turned on'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointRecordOffFeature
+        NAME 'AstEndpointRecordOffFeature'
+        DESC 'The feature to enact when one-touch recording is turned off'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointRtpEngine
+        NAME 'AstEndpointRtpEngine'
+        DESC 'Name of the RTP engine to use for channels created for this endpoint'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointAllowTransfer
+        NAME 'AstEndpointAllowTransfer'
+        DESC 'Determines whether SIP REFER transfers are allowed for this endpoint'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointUserEqPhone
+        NAME 'AstEndpointUserEqPhone'
+        DESC 'Determines whether a user=phone parameter is placed into the request URI if the user is determined to be a phone number'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointSdpOwner
+        NAME 'AstEndpointSdpOwner'
+        DESC 'String placed as the username portion of an SDP origin (o=) line'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointSdpSession
+        NAME 'AstEndpointSdpSession'
+        DESC 'String used for the SDP session (s=) line'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointTosAudio
+        NAME 'AstEndpointTosAudio'
+        DESC 'DSCP TOS bits for audio streams'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointTosVideo
+        NAME 'AstEndpointTosVideo'
+        DESC 'DSCP TOS bits for video streams'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointCosAudio
+        NAME 'AstEndpointCosAudio'
+        DESC 'Priority for audio streams'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointCosVideo
+        NAME 'AstEndpointCosVideo'
+        DESC 'Priority for video streams'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointAllowSubscribe
+        NAME 'AstEndpointAllowSubscribe'
+        DESC 'Determines if endpoint is allowed to initiate subscriptions with Asterisk'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointSubMinExpiry
+        NAME 'AstEndpointSubMinExpiry'
+        DESC 'The minimum allowed expiry time for subscriptions initiated by the endpoint'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointFromUser
+        NAME 'AstEndpointFromUser'
+        DESC 'Username to use in From header for requests to this endpoint'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointMwiFromUser
+        NAME 'AstEndpointMwiFromUser'
+        DESC 'Username to use in From header for unsolicited MWI NOTIFYs to this endpoint'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointFromDomain
+        NAME 'AstEndpointFromDomain'
+        DESC 'Domain to user in From header for requests to this endpoint'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointDtlsVerify
+        NAME 'AstEndpointDtlsVerify'
+        DESC 'Verify that the provided peer certificate is valid'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointDtlsRekey
+        NAME 'AstEndpointDtlsRekey'
+        DESC 'Interval at which to renegotiate the TLS session and rekey the SRTP session'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointDtlsCertFile
+        NAME 'AstEndpointDtlsCertFile'
+        DESC 'Path to certificate file to present to peer'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointDtlsPrivateKey
+        NAME 'AstEndpointDtlsPrivateKey'
+        DESC 'Path to private key for certificate file'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointDtlsCipher
+        NAME 'AstEndpointDtlsCipher'
+        DESC 'Cipher to use for DTLS negotiation'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointDtlsCaFile
+        NAME 'AstEndpointDtlsCaFile'
+        DESC 'Path to certificate authority certificate'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointDtlsCaPath
+        NAME 'AstEndpointDtlsCaPath'
+        DESC 'Path to a directory containing certificate authority certificates'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointDtlsSetup
+        NAME 'AstEndpointDtlsSetup'
+        DESC 'Whether we are willing to accept connections, connect to the other party, or both'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointDtlsFingerprint
+        NAME 'AstEndpointDtlsFingerprint'
+        DESC 'Type of hash to use for the DTLS fingerprint in the SDP'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointSrtpTag32
+        NAME 'AstEndpointSrtpTag32'
+        DESC 'Determines whether 32 byte tags should be used instead of 80 byte tags'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointSetVar
+        NAME 'AstEndpointSetVar'
+        DESC 'Variable set on a channel involving the endpoint'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointMessageContext
+        NAME 'AstEndpointMessageContext'
+        DESC 'Context to route incoming MESSAGE requests to'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointAccountCode
+        NAME 'AstEndpointAccountCode'
+        DESC 'An accountcode to set automatically on any channels created for this endpoint'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointRtpKeepalive
+        NAME 'AstEndpointRtpKeepalive'
+        DESC 'Number of seconds between RTP comfort noise keepalive packets'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointRtpTimeout
+        NAME 'AstEndpointRtpTimeout'
+        DESC 'Maximum number of seconds without receiving RTP (while off hold) before terminating call'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointRtpTimeoutHold
+        NAME 'AstEndpointRtpTimeoutHold'
+        DESC 'Maximum number of seconds without receiving RTP (while on hold) before terminating call'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointAcl
+        NAME 'AstEndpointAcl'
+        DESC 'List of IP ACL section names in acl.conf'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointDeny
+        NAME 'AstEndpointDeny'
+        DESC 'List of IP addresses to deny access from'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointPermit
+        NAME 'AstEndpointPermit'
+        DESC 'List of IP addresses to permit access from'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointContactAcl
+        NAME 'AstEndpointContactAcl'
+        DESC 'List of Contact ACL section names in acl.conf'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointContactDeny
+        NAME 'AstEndpointContactDeny'
+        DESC 'List of Contact header addresses to deny'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointContactPermit
+        NAME 'AstEndpointContactPermit'
+        DESC 'List of Contact header addresses to permit'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointSubscribeContext
+        NAME 'AstEndpointSubscribeContext'
+        DESC 'Context for incoming MESSAGE requests'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointContactUser
+        NAME 'AstEndpointContactUser'
+        DESC 'Force the user on the outgoing Contact header to this value'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointAsymmetricRtpCodec
+        NAME 'AstEndpointAsymmetricRtpCodec'
+        DESC 'Allow the sending and receiving RTP codec to differ'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointRtcpMux
+        NAME 'AstEndpointRtcpMux'
+        DESC 'Enable RFC 5761 RTCP multiplexing on the RTP port'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointReferBlindProgress
+        NAME 'AstEndpointReferBlindProgress'
+        DESC 'Whether to notifies all the progress details on blind transfer'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointNotifyEarlyInuseRinging
+        NAME 'AstEndpointNotifyEarlyInuseRinging'
+        DESC 'Whether to notifies dialog-info early on InUse&Ringing state'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointIncomingMwiMailbox
+        NAME 'AstEndpointIncomingMwiMailbox'
+        DESC 'Mailbox name to use when incoming MWI NOTIFYs are received'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointFollowEarlyMediaFork
+        NAME 'AstEndpointFollowEarlyMediaFork'
+        DESC 'Follow SDP forked media when To tag is different'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointAcceptMultipleSdpAnswers
+        NAME 'AstEndpointAcceptMultipleSdpAnswers'
+        DESC 'Accept multiple SDP answers on non-100rel responses'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointSuppressQ850ReasonHeaders
+        NAME 'AstEndpointSuppressQ850ReasonHeaders'
+        DESC 'Suppress Q.850 Reason headers for this endpoint'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstEndpointIgnore183WithoutSdp
+        NAME 'AstEndpointIgnore183WithoutSdp'
+        DESC 'Do not forward 183 when it doesn t contain SDP'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstIdentifyId
+        NAME 'AstIdentifyId'
+        DESC 'Identify ID'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstIdentifyEndpoint
+        NAME 'AstIdentifyEndpoint'
+        DESC 'Name of endpoint identified'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstIdentifyMatch
+        NAME 'AstIdentifyMatch'
+        DESC 'IP addresses or networks to match against'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstIdentifySrvLookups
+        NAME 'AstIdentifySrvLookups'
+        DESC 'Perform SRV lookups for provided hostnames'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstIdentifyMatchHeader
+        NAME 'AstIdentifyMatchHeader'
+        DESC 'Header/value pair to match against'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstContactId
+        NAME 'AstContactId'
+        DESC 'Contact ID'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstContactUri
+        NAME 'AstContactUri'
+        DESC 'SIP URI to contact peer'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstContactExpirationTime
+        NAME 'AstContactExpirationTime'
+        DESC 'Time to keep alive a contact'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstContactQualifyFrequency
+        NAME 'AstContactQualifyFrequency'
+        DESC 'Interval at which to qualify a contact'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstContactQualifyTimeout
+        NAME 'AstContactQualifyTimeout'
+        DESC 'Timeout for qualify'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstContactAuthenticateQualify
+        NAME 'AstContactAuthenticateQualify'
+        DESC 'Authenticates a qualify challenge response if needed'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstContactOutboundProxy
+        NAME 'AstContactOutboundProxy'
+        DESC 'Outbound proxy used when sending OPTIONS request'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstContactPath
+        NAME 'AstContactPath'
+        DESC 'Stored Path vector for use in Route headers on outgoing requests'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstContactUserAgent
+        NAME 'AstContactUserAgent'
+        DESC 'User-Agent header from registration'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstContactEndpoint
+        NAME 'AstContactEndpoint'
+        DESC 'Endpoint name'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstContactRegServer
+        NAME 'AstContactRegServer'
+        DESC 'Asterisk Server name'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstContactViaAddr
+        NAME 'AstContactViaAddr'
+        DESC 'IP-address of the last Via header from registration'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstContactViaPort
+        NAME 'AstContactViaPort'
+        DESC 'IP-port of the last Via header from registration'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstContactCallId
+        NAME 'AstContactCallId'
+        DESC 'Call-ID header from registration'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+olcAttributeTypes: ( AstContactPruneOnBoot
+        NAME 'AstContactPruneOnBoot'
+        DESC 'A contact that cannot survive a restart/boot'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15)
+#
+#############################################################################
+# Object Class definitions
+#
+# This is where to define the object classes. Object classes are used
+# to define which attribute MAY (optional) or MUST (required) belong
+# to an entry.
+#
+# Classes can be AUXILIARY or STRUCTURAL. An entry in the directory
+# must have one and only one structural class, but can have many
+# AUXILIARY classes.
+#
+#############################################################################
+#
+olcObjectClasses: ( AsteriskExtension 
+    NAME 'AsteriskExtension'
+    DESC 'PBX Extension Information for Asterisk'
+    SUP top AUXILIARY
+    MUST cn
+    MAY ( 
+        AstContext $
+        AstExtension $
+        AstPriority $
+        AstApplication $
+        AstApplicationData
+    ) 
+    )
+#
+#############################################################################
+#
+# AsteriskIAXUser and AsteriskSIPUser extend AsteriskExtension. These
+# represent real accounts in Asterisk.
+#
+# NOTE: They are defined as AUXILIARY in case they need to be mixed with an
+# existing directory deployment.
+#
+#############################################################################
+#       
+olcObjectClasses: ( AsteriskIAXUser 
+    NAME 'AsteriskIAXUser'
+    DESC 'IAX2 User information for Asterisk'
+    SUP AsteriskExtension AUXILIARY
+    MUST cn
+    MAY ( 
+        AstAccountAMAFlags $
+        AstAccountCallerID $
+        AstAccountContext $
+        AstAccountFullContact $
+        AstAccountHost $
+        AstAccountMailbox $
+        AstMD5secret $
+        AstAccountDeny $
+        AstAccountPermit $
+        AstAccountPort $
+        AstAccountQualify $
+        AstAccountType $
+        AstAccountLanguage $
+        AstAccountDisallowedCodec $
+        AstAccountExpirationTimestamp $
+        AstAccountRegistrationContext $
+        AstAccountRegistrationExten $
+        AstAccountNoTransfer $
+        AstAccountName $
+        AstAccountLastQualifyMilliseconds $
+        AstAccountCallLimit $
+        AstAccountSubscribeContext $
+        AstAccountIPAddress $
+        AstAccountUserAgent
+    )
+    )
+#       
+olcObjectClasses: ( AsteriskSIPUser 
+    NAME 'AsteriskSIPUser'
+    DESC 'SIP User information for Asterisk'
+    SUP AsteriskExtension AUXILIARY
+    MUST cn
+    MAY (
+        AstAccountAccountCode $
+        AstAccountAllowOverlap $
+        AstAccountAllowedCodec $
+        AstAccountAMAFlags $
+        AstAccountCallGroup $
+        AstAccountCallLimit $
+        AstAccountCallerID $
+        AstAccountCanCallForward $
+        AstAccountCanReinvite $
+        AstAccountContext $
+        AstAccountDTMFMode $
+        AstAccountDefaultUser $
+        AstAccountDeny $
+        AstAccountDisallowedCodec $
+        AstAccountExpirationTimestamp $
+        AstAccountFromDomain $
+        AstAccountFromUser $
+        AstAccountFullContact $
+        AstAccountHost $
+        AstAccountIgnoreSDPVersion $
+        AstAccountInsecure $
+        AstAccountIPAddress $
+        AstAccountLanguage $
+        AstAccountLastQualifyMilliseconds $
+        AstAccountMailbox $
+        AstAccountMusicOnHold $
+        AstAccountNAT $
+        AstAccountName $
+        AstAccountPermit $
+        AstAccountPickupGroup $
+        AstAccountPort $
+        AstAccountPromiscRedir $
+        AstAccountQualify $
+        AstAccountRTPHoldTimeout $
+        AstAccountRTPTimeout $
+        AstAccountRealmedPassword $
+        AstAccountRegistrationContext $
+        AstAccountRegistrationExten $
+        AstAccountRegistrationServer $
+        AstAccountRestrictCID $
+        AstAccountSecret $
+        AstAccountSetVar $
+        AstAccountSubscribeContext $
+        AstAccountTransport $
+        AstAccountType $
+        AstAccountUserAgent $
+        AstAccountVideoSupport $
+        AstAccountPathSupport
+    )
+    )
+#
+#############################################################################
+#
+# AsteriskConfig and AsteriskVoiceMail extend AsteriskExtension. These
+# represent real accounts in Asterisk.
+#
+# NOTE: They are defined as AUXILIARY in case they need to be mixed with an
+# existing directory deployment.
+#
+#############################################################################
+#        
+olcObjectClasses: ( AsteriskConfig 
+    NAME 'AsteriskConfig'
+    DESC 'Asterisk configuration Information'
+    SUP top AUXILIARY
+    MUST cn
+    MAY ( 
+        AstConfigFilename $
+        AstConfigCategory $
+        AstConfigCategoryMetric $
+        AstConfigVariableName $
+        AstConfigVariableValue $
+        AstConfigCommented
+    ) 
+    )
+#
+olcObjectClasses: ( AsteriskVoiceMail
+    NAME 'AsteriskVoiceMail'
+    DESC 'Asterisk voicemail information'
+    SUP top AUXILIARY
+    MUST (
+    cn $
+    AstContext $
+    AstVoicemailMailbox $
+    AstVoicemailPassword
+    ) 
+    MAY (
+    AstVoicemailFullname $
+    AstVoicemailEmail $
+    AstVoicemailPager $
+    AstVoicemailOptions $
+    AstVoicemailTimestamp $
+    AstVoicemailContext
+    )
+    )
+#
+olcObjectClasses: ( AsteriskDialplan
+    NAME 'AsteriskDialplan'
+    DESC 'Asterisk Dialplan Information'
+    SUP top STRUCTURAL
+    MUST ( 
+    AstExtension
+    )
+    )
+#
+olcObjectClasses: ( AsteriskAccount
+    NAME 'AsteriskAccount'
+    DESC 'Asterisk Account Information'
+    SUP top STRUCTURAL
+    MUST ( 
+    AstAccountName
+    )
+    )
+#
+olcObjectClasses: ( AsteriskMailbox
+    NAME 'AsteriskMailbox'
+    DESC 'Asterisk Mailbox Information'
+    SUP top STRUCTURAL
+    MUST (
+    AstVoicemailMailbox
+    )
+    )
+#
+#############################################################################
+#
+# PJSIP class definitions
+#
+# NOTE: They are defined as AUXILIARY in case they need to be mixed with an
+# existing directory deployment.
+#
+#############################################################################
+#
+olcObjectClasses: ( AsteriskPjsipAor 
+    NAME 'AsteriskPjsipAor'
+    DESC 'The configuration for a location of an endpoint'
+    SUP top AUXILIARY
+    MUST cn
+    MAY (
+        AstAorId $
+        AstAorContact $
+        AstAorDefaultExpiration $
+        AstAorMailboxes $
+        AstAorVoicemailExtension $
+        AstAorMaximumExpiration $
+        AstAorMaxContacts $
+        AstAorMinimumExpiration $
+        AstAorRemoveExisting $
+        AstAorQualifyFrequency $
+        AstAorQualifyTimeout $
+        AstAorAuthenticateQualify $
+        AstAorOutboundProxy $
+        AstAorSupportPath
+    )
+    )
+#
+olcObjectClasses: ( AsteriskPjsipAuth 
+    NAME 'AsteriskPjsipAuth'
+    DESC 'Authentication type'
+    SUP top AUXILIARY
+    MUST cn
+    MAY (
+        AstAuthId $
+        AstAuthType $
+        AstAuthNonceLifetime $
+        AstAuthMd5Cred $
+        AstAuthPassword $
+        AstAuthRealm $
+        AstAuthUsername
+    )
+    )
+#
+olcObjectClasses: ( AsteriskPjsipDomainAlias 
+    NAME 'AsteriskPjsipDomainAlias'
+    DESC 'Domain Alias'
+    SUP top AUXILIARY
+    MUST cn
+    MAY (
+        AstDomainAliasId $
+        AstDomainAliasDomain
+    )
+    )
+#
+olcObjectClasses: ( AsteriskPjsipEndpoint 
+    NAME 'AsteriskPjsipEndpoint'
+    DESC 'Endpoint'
+    SUP top AUXILIARY
+    MUST cn
+    MAY (
+        AstEndpointId $
+        AstEndpoint100rel $
+        AstEndpointAggregateMwi $
+        AstEndpointAllow $
+        AstEndpointAllowOverlap $
+        AstEndpointAors $
+        AstEndpointAuth $
+        AstEndpointCallerId $
+        AstEndpointCallerIdPrivacy $
+        AstEndpointCallerIdTag $
+        AstEndpointContext $
+        AstEndpointDirectMediaGlareMitigation $
+        AstEndpointDirectMediaMethod $
+        AstEndpointTrustConnectedLine $
+        AstEndpointSendConnectedLine $
+        AstEndpointConnectedLineMethod $
+        AstEndpointDirectMedia $
+        AstEndpointDisableDirectMediaOnNat $
+        AstEndpointDisallow $
+        AstEndpointDtmfMode $
+        AstEndpointMediaAddress $
+        AstEndpointBindRtpToMediaAddress $
+        AstEndpointForceRport $
+        AstEndpointIceSupport $
+        AstEndpointIdentifyBy $
+        AstEndpointRedirectMethod $
+        AstEndpointMailboxes $
+        AstEndpointMwiSubscribeReplacesUnsolicited $
+        AstEndpointVoicemailExtension $
+        AstEndpointMohSuggest $
+        AstEndpointOutboundAuth $
+        AstEndpointOutboundProxy $
+        AstEndpointRewriteContact $
+        AstEndpointRtpIpv6 $
+        AstEndpointRtpSymmetric $
+        AstEndpointSendDiversion $
+        AstEndpointSendPai $
+        AstEndpointSendRpid $
+        AstEndpointRpidImmediate $
+        AstEndpointTimersMinSe $
+        AstEndpointTimers $
+        AstEndpointTimersSessExpires $
+        AstEndpointTransport $
+        AstEndpointTrustIdInbound $
+        AstEndpointTrustIdOutbound $
+        AstEndpointUsePtime $
+        AstEndpointUseAvpf $
+        AstEndpointForceAvp $
+        AstEndpointMediaUseReceivedTransport $
+        AstEndpointMediaEncryption $
+        AstEndpointMediaEncryptionOptimistic $
+        AstEndpointg726NonStandard $
+        AstEndpointInbandProgress $
+        AstEndpointCallGroup $
+        AstEndpointPickupGroup $
+        AstEndpointNamedCallGroup $
+        AstEndpointNamedPickupGroup $
+        AstEndpointDeviceStateBusyAt $
+        AstEndpointt38Udptl $
+        AstEndpointt38UdptlEc $
+        AstEndpointt38UdptlMaxdatagram $
+        AstEndpointFaxDetect $
+        AstEndpointFaxDetectTimeout $
+        AstEndpointt38UdptlNat $
+        AstEndpointt38UdptlIpv6 $
+        AstEndpointToneZone $
+        AstEndpointLanguage $
+        AstEndpointOneTouchRecording $
+        AstEndpointRecordOnFeature $
+        AstEndpointRecordOffFeature $
+        AstEndpointRtpEngine $
+        AstEndpointAllowTransfer $
+        AstEndpointUserEqPhone $
+        AstEndpointSdpOwner $
+        AstEndpointSdpSession $
+        AstEndpointTosAudio $
+        AstEndpointTosVideo $
+        AstEndpointCosAudio $
+        AstEndpointCosVideo $
+        AstEndpointAllowSubscribe $
+        AstEndpointSubMinExpiry $
+        AstEndpointFromUser $
+        AstEndpointMwiFromUser $
+        AstEndpointFromDomain $
+        AstEndpointDtlsVerify $
+        AstEndpointDtlsRekey $
+        AstEndpointDtlsCertFile $
+        AstEndpointDtlsPrivateKey $
+        AstEndpointDtlsCipher $
+        AstEndpointDtlsCaFile $
+        AstEndpointDtlsCaPath $
+        AstEndpointDtlsSetup $
+        AstEndpointDtlsFingerprint $
+        AstEndpointSrtpTag32 $
+        AstEndpointSetVar $
+        AstEndpointMessageContext $
+        AstEndpointAccountCode $
+        AstEndpointRtpKeepalive $
+        AstEndpointRtpTimeout $
+        AstEndpointRtpTimeoutHold $
+        AstEndpointAcl $
+        AstEndpointDeny $
+        AstEndpointPermit $
+        AstEndpointContactAcl $
+        AstEndpointContactDeny $
+        AstEndpointContactPermit $
+        AstEndpointSubscribeContext $
+        AstEndpointContactUser $
+        AstEndpointAsymmetricRtpCodec $
+        AstEndpointRtcpMux $
+        AstEndpointReferBlindProgress $
+        AstEndpointNotifyEarlyInuseRinging $
+        AstEndpointIncomingMwiMailbox $
+        AstEndpointFollowEarlyMediaFork $
+        AstEndpointAcceptMultipleSdpAnswers $
+        AstEndpointSuppressQ850ReasonHeaders $
+        AstEndpointIgnore183WithoutSdp
+    )
+    )
+#
+olcObjectClasses: ( AsteriskPjsipIdentify 
+    NAME 'AsteriskPjsipIdentify'
+    DESC 'Identifies endpoints via some criteria'
+    SUP top AUXILIARY
+    MUST cn
+    MAY (
+        AstIdentifyEndpoint $
+        AstIdentifyMatch $
+        AstIdentifySrvLookups $
+        AstIdentifyMatchHeader
+    )
+    )
+#
+olcObjectClasses: ( AsteriskPjsipContact 
+    NAME 'AsteriskPjsipContact'
+    DESC 'A way of creating an aliased name to a SIP URI'
+    SUP top AUXILIARY
+    MUST cn
+    MAY (
+        AstContactId $
+        AstContactUri $
+        AstContactExpirationTime $
+        AstContactQualifyFrequency $
+        AstContactQualifyTimeout $
+        AstContactAuthenticateQualify $
+        AstContactOutboundProxy $
+        AstContactPath $
+        AstContactUserAgent $
+        AstContactEndpoint $
+        AstContactRegServer $
+        AstContactViaAddr $
+        AstContactViaPort $
+        AstContactCallId $
+        AstContactPruneOnBoot
+    )
+    )
