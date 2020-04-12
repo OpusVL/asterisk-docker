@@ -1,3 +1,4 @@
+
 #!/bin/sh
 
 apt-get update
@@ -12,8 +13,12 @@ apt-get install -y \
   libssl-dev \
   libuuid1 \
   libxml2-dev \
+  odbc-postgresql \
   openssl \
+  postgresql-client \
   supervisor \
+  unixodbc \
+  unixodbc-dev \
   uuid-dev
 
 apt-get autoclean

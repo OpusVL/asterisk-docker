@@ -14,8 +14,12 @@ apt-get install -y \
   libssl-dev \
   libuuid1 \
   libxml2-dev \
+  odbc-postgresql \
   openssl \
+  postgresql-client \
   sqlite3 \
+  unixodbc \
+  unixodbc-dev \
   uuid-dev 
 
 git clone https://github.com/asterisk/asterisk.git /asterisk
