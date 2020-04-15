@@ -8,7 +8,9 @@ Multi-stage Dockerfile uses build-essential and git to clone from the git reposi
 
 First stage installs the prerequisites and builds Asterisk from source. Second stage copies the compiled assets from the first, sets up the asterisk user and sets permissions.
 
-> Now includes the Festival Text-To-Speach Server and LDAP support.
+> Includes the Festival Text-To-Speach Server and LDAP support.
+
+> Now with opus codec from https://downloads.digium.com/pub/telephony/codec_opus/ and with res_rtsp as it was missing from earlier builds because of a non-included `librtsp2-dev`.
 
 `/etc/asterisk` is populated with the config samples from `make samples`. Mount your own folder to overwrite the samples.
 
@@ -53,6 +55,10 @@ You will need to import the [`asterisk.ldif`](asterisk.ldif) schema into your LD
 
 Full details are here: [Asterisk LDAP Integration](http://asteriskdocs.org/en/3rd_Edition/asterisk-book-html-chunk/ExternalServices_id291590.html)
 
+## ODBC and PostgreSQL Support
+
+Now build with ODBC and the postgresql-client to enble the use of real-time databases.
+
 ## Festival TTS
 
 Festival is a default install listening on TCP port 1314 - but does not need to be exposed.
@@ -60,3 +66,5 @@ Festival is a default install listening on TCP port 1314 - but does not need to 
 ## Supervisor
 
 Supervisor is used to start the two programs (festival and asterisk) within the container. The supervisor configuration is included as [`asterisk.conf`](./asterisk.conf)
+
+Minor change to the asterisk startup to put it into non-colour console.

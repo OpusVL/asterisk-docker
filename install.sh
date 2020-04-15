@@ -10,6 +10,7 @@ apt-get install -y \
   libldap2-dev \
   libncurses5-dev \
   libsqlite3-dev \
+  libsrtp2-dev \
   libssl-dev \
   libuuid1 \
   libxml2-dev \
